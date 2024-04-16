@@ -1,0 +1,42 @@
+{
+  "query": [
+    {
+      "code": "Puolue",
+      "selection": {
+        "filter": "item",
+        "values": [
+          "03",
+          "01",
+          "04",
+          "02",
+          "05",
+          "06",
+          "07",
+          "08",
+          "09"
+        ]
+      }
+    },
+    {
+      "code": "Äänestysalue",
+      "selection": {
+        "filter": "item",
+        "values": [
+          "020"
+        ]
+      }
+    },
+    {
+      "code": "Tiedot",
+      "selection": {
+        "filter": "item",
+        "values": [
+          "osuus_aanista"
+        ]
+      }
+    }
+  ],
+  "response": {
+    "format": "json-stat2"
+  }
+}
