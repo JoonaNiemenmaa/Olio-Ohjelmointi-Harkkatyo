@@ -11,7 +11,7 @@
         android:id="@+id/buttonSearch"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="64dp"
+        android:layout_marginTop="32dp"
         android:onClick="searchForMunicipality"
         android:text="SEARCH"
         app:layout_constraintEnd_toEndOf="@+id/editSearchMunicipality"
@@ -22,7 +22,7 @@
         android:id="@+id/editSearchMunicipality"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="256dp"
+        android:layout_marginTop="128dp"
         android:ems="10"
         android:hint="Search for municipality"
         android:inputType="text"
@@ -30,13 +30,27 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rvPreviousSearches"
+        android:layout_width="200dp"
+        android:layout_height="300dp"
+        android:layout_marginTop="32dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/buttonSearch"
+        app:layout_constraintVertical_bias="0.158" />
+
     <TextView
-        android:id="@+id/textCode"
+        android:id="@+id/textPreviousSearches"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Code here"
-        app:layout_constraintBottom_toTopOf="@+id/editSearchMunicipality"
-        app:layout_constraintEnd_toEndOf="@+id/editSearchMunicipality"
-        app:layout_constraintStart_toStartOf="@+id/editSearchMunicipality"
-        app:layout_constraintTop_toTopOf="parent" />
+        android:text="Previous searches"
+        app:layout_constraintBottom_toTopOf="@+id/rvPreviousSearches"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/buttonSearch"
+        app:layout_constraintVertical_bias="0.611" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

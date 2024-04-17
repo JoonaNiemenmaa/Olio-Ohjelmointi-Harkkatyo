@@ -18,9 +18,9 @@ import com.anychart.charts.Pie;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-public class DisplayMunicipalityDataFragment extends Fragment {
+public class DataFragment extends Fragment {
 
-    public DisplayMunicipalityDataFragment() {
+    public DataFragment() {
         // Required empty public constructor
     }
 
@@ -32,7 +32,7 @@ public class DisplayMunicipalityDataFragment extends Fragment {
     AnyChartView pie_political;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_display_municipality_data, container, false);
+        View view = inflater.inflate(R.layout.fragment_data, container, false);
         text_municipality = view.findViewById(R.id.textMunicipalityName);
         text_population = view.findViewById(R.id.textPopulation);
         text_population_difference = view.findViewById(R.id.textPopulationDiff);

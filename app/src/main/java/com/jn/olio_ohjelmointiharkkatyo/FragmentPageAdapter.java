@@ -14,18 +14,16 @@ public class FragmentPageAdapter extends FragmentStateAdapter {
     public Fragment createFragment(int position) {
         switch (position) {
             case 0:
-                return new DisplayMunicipalityDataFragment();
+                return new DataFragment();
             case 1:
                 return new CompareFragment();
-            case 2:
-                return new QuizFragment();
         }
-        return new DisplayMunicipalityDataFragment();
+        return new DataFragment();
     }
 
     @Override
     public int getItemCount() {
-        return 3;
+        return 2;
     }
 }
 

@@ -93,7 +93,7 @@ public class DataRetriever {
         }
         return null;
     }
-    public PopulationData getPopulationData(Context context, String municipality_name) {
+    private PopulationData getPopulationData(Context context, String municipality_name) {
         String municipality_code = municipalities.get(municipality_name);
         JsonNode population_data_node = fetchData(context, municipality_code, population_query_url, R.raw.population_query);
         PopulationData population_data;
@@ -116,23 +116,25 @@ public class DataRetriever {
         population_data = new PopulationData(population, population_difference, employment, workplace_self_sufficiency);
         return population_data;
     }
-    public HashMap<String, Float> getPoliticalData(Context context, String municipality_name) {
+    private HashMap<String, Float> getPoliticalData(Context context, String municipality_name) {
         final int amount_of_parties = 9;
         String municipality_code = municipalities.get(municipality_name);
-        // The code we get from the municipalities hashmap has to have the first two characters removed for the query to be valid
-        municipality_code = municipality_code.substring(2);
-        JsonNode political_data_node = fetchData(context, municipality_code, political_data_query_url, R.raw.political_query);
         HashMap<String, Float> political_data = new HashMap<>();
-        if (political_data_node != null) {
-            for (int i = 0; i < amount_of_parties; i++) {
-                // Here's some kinda obtuse code since the .json response file is formatted in a weird way.
-                // Essentially each datapoint for the political parties and their vote(%) has an unique identifier
-                // (for example "03" for KOK (Kokoomus)) which results in this weirdness
-                String code = "0" + (i + 1);
-                String key = political_data_node.get("dimension").get("Puolue").get("category").get("label").get(code).asText();
-                int index = political_data_node.get("dimension").get("Puolue").get("category").get("index").get(code).asInt();
-                float value = (float)political_data_node.get("value").get(index).asDouble();
-                political_data.put(key, value);
+        if (municipality_code != null) {
+            // The code we get from the municipalities hashmap has to have the first two characters removed for the query to be valid
+            municipality_code = municipality_code.substring(2);
+            JsonNode political_data_node = fetchData(context, municipality_code, political_data_query_url, R.raw.political_query);
+            if (political_data_node != null) {
+                for (int i = 0; i < amount_of_parties; i++) {
+                    // Here's some kinda obtuse code since the .json response file is formatted in a weird way.
+                    // Essentially each datapoint for the political parties and their vote(%) has an unique identifier
+                    // in the json file (for example "03" for KOK (Kokoomus)) which results in this weirdness
+                    String code = "0" + (i + 1);
+                    String key = political_data_node.get("dimension").get("Puolue").get("category").get("label").get(code).asText();
+                    int index = political_data_node.get("dimension").get("Puolue").get("category").get("index").get(code).asInt();
+                    float value = (float)political_data_node.get("value").get(index).asDouble();
+                    political_data.put(key, value);
+                }
             }
         }
         System.out.println(political_data);
@@ -140,5 +142,13 @@ public class DataRetriever {
             political_data.put("None", 1.0f);
         }
         return political_data;
+    }
+    public MunicipalityData getMunicipalityData(Context context, String municipality_name) {
+        if (municipalities.get(municipality_name) == null) {
+            return null;
+        }
+        PopulationData population_data = data_retriever.getPopulationData(context, municipality_name);
+        HashMap<String, Float> political_data = data_retriever.getPoliticalData(context, municipality_name);
+        return new MunicipalityData(municipality_name, population_data, political_data);
     }
 }
