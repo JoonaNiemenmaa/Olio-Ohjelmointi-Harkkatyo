@@ -6,7 +6,7 @@ Tästä harkkatyöstä tulikin loppujen lopuksi aika erilaisen näkönen verratt
 pystyy nyt siis hakemaan erilaista Suomen kuntiin liittyvää dataa. Eli siis käyttäjä pystyy hakemaan kunnan nimen ja sitten ohjelma näyttää eri-
 laista dataa käyttäjälle. Ohjelmalla pystyy myös vertailemaan samoja datoja jonkun muun kunnan kanssa.
 
-Lisää ohjelman ominaisuuksista ja sielunelämästä syvemmällä
+Lisää ohjelman ominaisuuksista ja sielunelämästä syvemmällä dokumentaatiossa.
 
 PAKETIT:
 
@@ -34,6 +34,28 @@ SITTEN VIELÄ NIISTÄ LUOKISTA ETTÄ MITÄ NE TEKEE:
 
 Luokkakaavio
 
-![image](https://github.com/PANAANI/Olio-Ohjelmointi-Harkkatyo/assets/127149891/0646e7f0-b730-4c47-aee2-4b8df89cedf8)
+![image](https://github.com/PANAANI/Olio-Ohjelmointi-Harkkatyo/assets/127149891/9d4b8366-6abf-4410-adec-af94425b42e8)
 
+MunicipalityData, PopulationData ja WeatherData:
 
+MunicipalityData:n tehtävänä on toimia konttina Population-, Weather- ja PoliticalData:lle.
+
+Population- ja WeatherData ovat luokkia jotka sisältää niihin liittyvät datat (katso UML tarkempaa määritelmää siitä mitä näissä säilötään)
+
+PoliticalData on Hashmap:pi joka koostuu puoluenimistä ja niiden saamista äänimääristä.
+
+DataStorage:
+
+DataStorage on singleton, jotta siihen saa helposti referenssin mistä päin tahansa ohjelmaa.
+
+DataStorage:n tehtäviin kuuluu MunicipalityData instanssien säilöminen ohjelman ajon aikana ja kuntahakujen säilöminen ja lukeminen/kirjoittaminen tiedostoon.
+
+DataStorage tallentaa aina viisi viimeisintä hakusanaa mitä käyttäjä hakee.
+
+DataRetriever:
+
+Tämän ohjelman monimutkaisin rakennelma. Yleisesti ottaen DataRetrieverin tehtävä on kysellä tarvittavat datat OpenWeatherin ja Tilastokeskuksen API:eista fetchDataOpenWeather() ja fetchDataStatisticsFinland() metodien avulla.
+DataRetriever myös rakentaa näistä datoista instanssit Population-, Political- ja WeatherDatasta ja asettaa ne MunicipalityData luokan instanssiin.
+
+Vielä erikseen tähän maininta tuosta loadWeatherImage() metodista. WeatherData tarjoaa käyttöön erilaisia kuvia eri sääolosuhteiden kuvaamiseen, jotka pystyy kivasti saamaan netistä API-kyselyn kautta.
+loadWeatherImage() siis periaatteessa vaan käy netistä hakemassa OpenWeatheriltä sopivan kuvan ja asettaa sen BitMap arvoon, jonka pystyy sitten asettamaan näytölle ImageView:iin.
