@@ -33,6 +33,7 @@ Eli siis tästä saisi noin 23 pistettä yhteensä pakollisten pisteiden lisäks
 SITTEN VIELÄ NIISTÄ LUOKISTA ETTÄ MITÄ NE TEKEE:
 
 Luokkakaavio
+
 ![image](https://github.com/PANAANI/Olio-Ohjelmointi-Harkkatyo/assets/127149891/0646e7f0-b730-4c47-aee2-4b8df89cedf8)
 
 
