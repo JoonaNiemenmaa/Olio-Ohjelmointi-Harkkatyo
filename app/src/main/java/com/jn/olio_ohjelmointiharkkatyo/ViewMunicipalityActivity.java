@@ -1,7 +1,12 @@
 package com.jn.olio_ohjelmointiharkkatyo;
 
+import android.content.Context;
 import android.os.Bundle;
+import android.text.Editable;
+import android.view.View;
+import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
@@ -16,6 +21,8 @@ import com.google.android.material.tabs.TabLayout;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 public class ViewMunicipalityActivity extends AppCompatActivity {
     @Override
@@ -47,8 +54,5 @@ public class ViewMunicipalityActivity extends AppCompatActivity {
                 tab_layout.getTabAt(position).select();
             }
         });
-        /*
-         */
     }
-
 }

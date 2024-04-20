@@ -7,6 +7,7 @@ import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.anychart.AnyChart;
@@ -29,6 +30,8 @@ public class DataFragment extends Fragment {
         super.onCreate(savedInstanceState);
     }
     TextView text_municipality, text_population, text_population_difference, text_employment, text_workplace_self_sufficiency;
+    TextView text_main, text_desc, text_temperature, text_wind_speed;
+    ImageView image_weather;
     AnyChartView pie_political;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -39,18 +42,32 @@ public class DataFragment extends Fragment {
         text_employment = view.findViewById(R.id.textEmployment);
         text_workplace_self_sufficiency = view.findViewById(R.id.textWorkplaceSelfSufficiency);
 
+        text_main = view.findViewById(R.id.textWeatherMain);
+        text_desc = view.findViewById(R.id.textWeatherDesc);
+        text_temperature = view.findViewById(R.id.textWeatherTemp);
+        text_wind_speed = view.findViewById(R.id.textWeatherWindSpeed);
+        image_weather = view.findViewById(R.id.imageWeather);
+
         MunicipalityData municipality = DataStorage.getInstance().getMunicipality();
 
         text_municipality.setText(municipality.getMunicipalityName());
-        if (municipality.getPopulationData() != null) {
-            PopulationData population_data = municipality.getPopulationData();
 
-            text_population.append(Integer.toString(population_data.getPopulation()));
-            text_population_difference.append(Integer.toString(population_data.getPopulationDifference()));
-            text_employment.append(population_data.getEmployment() + "%");
-            text_workplace_self_sufficiency.append(population_data.getWorkplaceSelfSufficiency() + "%");
+        PopulationData population_data = municipality.getPopulationData();
 
-        }
+        text_population.append(Integer.toString(population_data.getPopulation()));
+        text_population_difference.append(Integer.toString(population_data.getPopulationDifference()));
+        text_employment.append(population_data.getEmployment() + "%");
+        text_workplace_self_sufficiency.append(population_data.getWorkplaceSelfSufficiency() + "%");
+
+        WeatherData weather_data = municipality.getWeatherData();
+
+        text_main.append(weather_data.getMain());
+        text_desc.append(weather_data.getDesc());
+        text_temperature.append(weather_data.getTemp() + " °C");
+        text_wind_speed.append(weather_data.getWindSpeed() + " m/s");
+
+        image_weather.setImageBitmap(weather_data.getWeatherImage());
+
         pie_political = view.findViewById(R.id.piePolitical);
         setupPieChart(municipality);
         return view;

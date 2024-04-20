@@ -5,12 +5,12 @@ import android.content.Context;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
-import java.io.OutputStream;
 import java.util.ArrayList;
 
 public class DataStorage {
     private static DataStorage data_storage;
     private MunicipalityData municipality;
+    private MunicipalityData comparison_municipality;
     final static private int amount_of_searches_to_remember = 5;
     final static private String filename = "searches.data";
     private ArrayList<String> searches = new ArrayList<>();
@@ -23,11 +23,9 @@ public class DataStorage {
         }
         return data_storage;
     }
-
     public MunicipalityData getMunicipality() {
         return municipality;
     }
-
     public void setMunicipality(MunicipalityData municipality) {
         this.municipality = municipality;
     }
@@ -38,7 +36,6 @@ public class DataStorage {
                 searches.remove(0);
             }
         }
-        System.out.println(searches);
     }
     public ArrayList<String> getSearches() { return searches; }
     public void saveSearches(Context context) {
@@ -60,5 +57,11 @@ public class DataStorage {
         } catch (ClassNotFoundException e) {
             e.printStackTrace();
         }
+    }
+    public MunicipalityData getComparisonMunicipality() {
+        return comparison_municipality;
+    }
+    public void setComparisonMunicipality(MunicipalityData comparison_municipality) {
+        this.comparison_municipality = comparison_municipality;
     }
 }
