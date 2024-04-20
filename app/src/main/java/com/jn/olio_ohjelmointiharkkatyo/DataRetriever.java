@@ -27,9 +27,6 @@ public class DataRetriever {
     final private ObjectMapper object_mapper = new ObjectMapper();
     HashMap<String, String> municipalities;
     final private String population_query_url = "https://pxdata.stat.fi/PxWeb/api/v1/fi/StatFin/kuol/statfin_kuol_pxt_12au.px";
-    final private String employment_query_url = "https://pxdata.stat.fi:443/PxWeb/api/v1/fi/StatFin/tyokay/statfin_tyokay_pxt_115x.px";
-    final private String workplace_self_sufficiency_query_url = "https://pxdata.stat.fi:443/PxWeb/api/v1/fi/StatFin/tyokay/statfin_tyokay_pxt_125s.px";
-    final private String political_data_query_url = "https://pxdata.stat.fi:443/PxWeb/api/v1/fi/StatFin/kvaa/statfin_kvaa_pxt_12wy.px";
     // Constructor is private due to DataRetriever being a singleton class
     // Decided to make DataRetriever a singleton as it helps to have a static
     // reference to an instance of DataRetriever that can be used anywhere in the code
@@ -64,7 +61,7 @@ public class DataRetriever {
         }
         return data_retriever;
     }
-    private JsonNode fetchDataStatisticsFinland(Context context, String code, String query_url, int json_file_id) {
+    private JsonNode fetchDataStatisticsFinland(Context context, String municipality_code, String query_url, int json_file_id) {
         try {
             URL url = new URL(query_url);
 
@@ -76,7 +73,7 @@ public class DataRetriever {
 
             JsonNode json_input_string = object_mapper.readTree(context.getResources().openRawResource(json_file_id));
 
-            ((ObjectNode) json_input_string.get("query").get(1).get("selection")).putArray("values").add(code);
+            ((ObjectNode) json_input_string.get("query").get(1).get("selection")).putArray("values").add(municipality_code);
 
             byte[] input = object_mapper.writeValueAsBytes(json_input_string);
 
@@ -131,11 +128,13 @@ public class DataRetriever {
             population = population_data_node.get("value").get(1).asInt();
             population_difference = population_data_node.get("value").get(0).asInt();
         }
+        final String employment_query_url = "https://pxdata.stat.fi:443/PxWeb/api/v1/fi/StatFin/tyokay/statfin_tyokay_pxt_115x.px";
         JsonNode employment_data_node = fetchDataStatisticsFinland(context, municipality_code, employment_query_url, R.raw.employment_query);
         float employment = 0;
         if (employment_data_node != null) {
             employment = (float)employment_data_node.get("value").get(0).asDouble();
         }
+        final String workplace_self_sufficiency_query_url = "https://pxdata.stat.fi:443/PxWeb/api/v1/fi/StatFin/tyokay/statfin_tyokay_pxt_125s.px";
         JsonNode workplace_self_sufficiency_data_node = fetchDataStatisticsFinland(context, municipality_code, workplace_self_sufficiency_query_url, R.raw.workplace_self_sufficiency_query);
         float workplace_self_sufficiency = 0;
         if (workplace_self_sufficiency_data_node != null) {
@@ -151,6 +150,7 @@ public class DataRetriever {
         if (municipality_code != null) {
             // The code we get from the municipalities hashmap has to have the first two characters removed for the query to be valid
             municipality_code = municipality_code.substring(2);
+            final String political_data_query_url = "https://pxdata.stat.fi:443/PxWeb/api/v1/fi/StatFin/kvaa/statfin_kvaa_pxt_12wy.px";
             JsonNode political_data_node = fetchDataStatisticsFinland(context, municipality_code, political_data_query_url, R.raw.political_query);
             if (political_data_node != null) {
                 for (int i = 0; i < amount_of_parties; i++) {
@@ -170,7 +170,7 @@ public class DataRetriever {
         }
         return political_data;
     }
-    private WeatherData getWeatherData(Context context, String municipality_name) {
+    private WeatherData getWeatherData(String municipality_name) {
         JsonNode weather_node = fetchDataOpenWeather(municipality_name);
         String main = "None";
         String desc = "None";
@@ -191,6 +191,7 @@ public class DataRetriever {
         return new WeatherData(main, desc, temp, wind_speed, weather_image);
     }
     private Bitmap loadWeatherImage(String image_code) {
+        // I took the code for this from here https://stackoverflow.com/questions/5776851/load-image-from-url
         try {
             String image_url_string = "https://openweathermap.org/img/wn/%s@2x.png";
             URL url = new URL(String.format(image_url_string, image_code));
@@ -208,7 +209,7 @@ public class DataRetriever {
         }
         PopulationData population_data = data_retriever.getPopulationData(context, municipality_name);
         HashMap<String, Float> political_data = data_retriever.getPoliticalData(context, municipality_name);
-        WeatherData weather_data = data_retriever.getWeatherData(context, municipality_name);
+        WeatherData weather_data = data_retriever.getWeatherData(municipality_name);
         return new MunicipalityData(municipality_name, population_data, political_data, weather_data);
     }
 }
