@@ -59,3 +59,11 @@ DataRetriever myös rakentaa näistä datoista instanssit Population-, Political
 
 Vielä erikseen tähän maininta tuosta loadWeatherImage() metodista. WeatherData tarjoaa käyttöön erilaisia kuvia eri sääolosuhteiden kuvaamiseen, jotka pystyy kivasti saamaan netistä API-kyselyn kautta.
 loadWeatherImage() siis periaatteessa vaan käy netistä hakemassa OpenWeatheriltä sopivan kuvan ja asettaa sen BitMap arvoon, jonka pystyy sitten asettamaan näytölle ImageView:iin.
+
+NOTES:
+
+Jotta sain OpenWeather:in API:n toimimaan minun täytyi käydä lisäämässä AndroidManifest.xml:lään seuraava rivi:
+
+android:usesCleartextTraffic="true" ('<application' kohdan alle)
+
+Nyt en muista näytettiinkö tätä kurssin videomateriaalissa, mutta aattelin lisätä tämän kuitenkin tähän loppuun varmuuden vuoksi.
