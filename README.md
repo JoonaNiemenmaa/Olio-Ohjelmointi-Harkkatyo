@@ -2,9 +2,7 @@ DOKUMENTAATIO
 
 INTRO:
 
-Tästä harkkatyöstä tulikin loppujen lopuksi aika erilaisen näkönen verrattuna siihen mitä suunnittelin, mutta ei kai siinä mitään. Ohjelmalla
-pystyy nyt siis hakemaan erilaista Suomen kuntiin liittyvää dataa. Eli siis käyttäjä pystyy hakemaan kunnan nimen ja sitten ohjelma näyttää eri-
-laista dataa käyttäjälle. Ohjelmalla pystyy myös vertailemaan samoja datoja jonkun muun kunnan kanssa.
+Ohjelma on Android applikaatio jolla pystyy hakemaan erilaista dataa (kuten säätietoja, väkiluku) Suomen eri kunnista. Ohjelma suorittaa datanhaun tekemällä API-kutsuja OpenWeather:in ja Tilastokeskuksen JSON-API:iin.
 
 Lisää ohjelman ominaisuuksista ja sielunelämästä syvemmällä dokumentaatiossa.
 
